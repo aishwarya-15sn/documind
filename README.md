@@ -43,30 +43,15 @@ DocuMind combines semantic search with Google Gemini to retrieve relevant inform
 
 ## 🏗️ Project Architecture
 
-```text
-PDF Upload
-    │
-    ▼
-Text Extraction (PyPDF2)
-    │
-    ▼
-Text Chunking
-    │
-    ▼
-HuggingFace Embeddings
-(all-MiniLM-L6-v2)
-    │
-    ▼
-FAISS Vector Store
-    │
-    ▼
-Similarity Search
-    │
-    ▼
-Google Gemini Flash
-    │
-    ▼
-Context-Aware Answer
+```mermaid
+flowchart TD
+    A[Upload PDF Documents] --> B[Extract Text using PyPDF2]
+    B --> C[Split Text into Chunks]
+    C --> D[Generate Embeddings<br/>all-MiniLM-L6-v2]
+    D --> E[Store Embeddings in FAISS]
+    E --> F[Similarity Search]
+    F --> G[Google Gemini Flash]
+    G --> H[Context-Aware Response]
 ```
 
 ---
