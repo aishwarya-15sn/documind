@@ -1,4 +1,4 @@
-# 📄 DocuMind
+# 📄 DocuMind – Enterprise AI Document Copilot
 
 An AI-powered document intelligence application that enables users to upload one or more PDF documents, generate concise summaries, and ask questions using Retrieval-Augmented Generation (RAG).
 
