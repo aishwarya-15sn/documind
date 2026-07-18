@@ -291,7 +291,7 @@ def main():
         user_input(user_question,model_name,api_key,pdf_docs,st.session_state.conversation_history)
         
         st.divider()
-        st.caption("Built by Aishwarya S N | Python • Streamlit • LangChain • FAISS • Gemini 2.0 Flash")
+        st.caption("Built by Aishwarya S N | Python • Streamlit • LangChain • FAISS • Google Gemini Flash")
 
 if __name__=="__main__":
     main()
