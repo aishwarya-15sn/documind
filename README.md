@@ -1,117 +1,170 @@
-<<<<<<< HEAD
-# DocuMind
+# 📄 DocuMind
 
-## Overview
+An AI-powered document intelligence application that enables users to upload one or more PDF documents, generate concise summaries, and ask questions using Retrieval-Augmented Generation (RAG).
 
-## Features
+DocuMind combines semantic search with Google Gemini to retrieve relevant information only from the uploaded documents, helping reduce hallucinations and provide context-aware responses.
 
-## Tech Stack
+---
 
-## Project Architecture
+## 🚀 Features
 
-## Installation
+- 📄 Upload one or multiple PDF documents
+- 📝 Generate AI-powered document summaries
+- 🔍 Semantic search using FAISS vector embeddings
+- 💬 Ask questions in natural language
+- 🎯 Context-aware responses based only on uploaded documents
+- 🚫 Detects when information is unavailable in the uploaded documents
+- 📊 Document analytics (Documents, Pages, Chunks)
+- 📥 Download chat history as CSV
+- 🗑️ Clear Chat and Reset functionality
 
-## Usage
+---
 
-## Screenshots
+## 🛠 Tech Stack
 
-## Future Improvements
+| Technology | Purpose |
+|------------|---------|
+| Python | Backend |
+| Streamlit | User Interface |
+| LangChain | RAG Pipeline |
+| FAISS | Vector Database |
+| HuggingFace Embeddings | Semantic Search |
+| Google Gemini 2.0 Flash | Large Language Model |
+| PyPDF2 | PDF Text Extraction |
+| Pandas | Chat History Export |
 
-## Author
-=======
-# DocuMind – Enterprise AI Document Copilot
+---
 
-DocuMind is an AI-powered document intelligence platform that enables semantic search, question answering, and knowledge retrieval from PDF documents using Retrieval-Augmented Generation (RAG), FAISS vector search, LangChain orchestration, and Google's Gemini models.
+## ⚙️ How It Works
 
-## Overview
+1. Upload one or more PDF documents.
+2. Extract text from the uploaded PDFs.
+3. Split the extracted text into smaller chunks.
+4. Generate embeddings using HuggingFace.
+5. Store embeddings in a FAISS vector database.
+6. Retrieve the most relevant document chunks for each query.
+7. Send the retrieved context to Google Gemini.
+8. Display an answer generated only from the uploaded document context.
 
-Organizations generate large volumes of unstructured documents such as reports, manuals, contracts, technical documentation, and knowledge repositories. Retrieving relevant information from these documents can be time-consuming and inefficient.
+---
 
-DocuMind addresses this challenge by transforming documents into searchable knowledge bases. Users can upload PDF documents, ask natural language questions, and receive context-aware responses grounded in document content.
+## 📸 Screenshots
 
-## Key Features
+### 🏠 Home
+![](assets/01_home.png)
 
-* PDF document ingestion and processing
-* Automated text extraction and chunking
-* Vector embedding generation
-* FAISS-based semantic retrieval
-* Retrieval-Augmented Generation (RAG)
-* Natural language question answering
-* Context-aware document search
-* Interactive Streamlit interface
+---
 
-## Technical Approach
+### 📄 Upload Multiple PDFs
+![](assets/02_upload_pdfs.png)
 
-DocuMind follows a Retrieval-Augmented Generation (RAG) workflow:
+---
 
-1. PDF documents are uploaded and processed.
-2. Text content is extracted and divided into manageable chunks.
-3. Vector embeddings are generated for each document chunk.
-4. Embeddings are indexed using FAISS.
-5. User queries are converted into vector representations.
-6. Relevant document chunks are retrieved through semantic similarity search.
-7. Retrieved context is provided to Gemini for response generation.
-8. Context-aware answers are returned to the user.
+### 📝 Generate Document Summary
+![](assets/03_generate_summary.png)
 
-## Technologies Used
+---
 
-* Python
-* Streamlit
-* LangChain
-* FAISS
-* Google Gemini API
-* Hugging Face Embeddings
-* Retrieval-Augmented Generation (RAG)
+### 📚 Knowledge Base Ready
+![](assets/05_knowledge_base_ready.png)
 
-## Project Structure
+---
 
-* `app.py` – Streamlit user interface
-* `main.py` – Application entry point
-* `rag_pipeline.py` – RAG workflow implementation
-* `faiss_index/` – Vector database storage
-* `requirements.txt` – Project dependencies
+### 💬 Question Answering
+![](assets/06_question_answer.png)
 
-## Getting Started
+---
 
-Install dependencies:
+### 👥 Entity Extraction
+![](assets/07_entity_extraction.png)
+
+---
+
+### 🚫 Out-of-Context Question
+![](assets/08_out_of_context_question.png)
+
+---
+
+### 🧠 Context Awareness
+![](assets/09_context_awareness.png)
+
+---
+
+### 📥 Download Chat History
+![](assets/10_chat_history_download.png)
+
+---
+
+### 📊 Exported CSV
+![](assets/11_downloaded_csv.png)
+
+---
+
+### 🗑️ Clear Chat
+![](assets/12_Clear_Chat.png)
+
+---
+
+### 🔄 Reset Application
+![](assets/13_Reset.png)
+
+---
+
+## 💻 Installation
+
+Clone the repository
+
+```bash
+git clone https://github.com/aishwarya-15sn/documind.git
+```
+
+Move into the project directory
+
+```bash
+cd documind
+```
+
+Install the required packages
 
 ```bash
 pip install -r requirements.txt
 ```
 
-Run the application:
+Create a Streamlit secrets file
+
+```
+.streamlit/secrets.toml
+```
+
+Add your Gemini API key
+
+```toml
+GOOGLE_API_KEY="YOUR_API_KEY"
+```
+
+Run the application
 
 ```bash
 streamlit run app.py
 ```
 
-## Potential Applications
+---
 
-* Enterprise knowledge management
-* Intelligent document search
-* Technical documentation assistants
-* Research document analysis
-* Corporate knowledge retrieval
-* Internal AI-powered document assistants
+## 🔮 Future Improvements
 
-## Future Enhancements
+- Support DOCX and TXT documents
+- OCR support for scanned PDFs
+- Page-wise source citations
+- Persistent conversation memory
+- Multiple embedding model options
+- Cloud deployment
 
-* Multi-document knowledge bases
-* Source citation and traceability
-* Document classification and tagging
-* Hybrid retrieval architectures
-* Multi-agent document workflows
-* Enterprise document management integration
+---
 
-## Author
+## 👩‍💻 Author
 
-**Aishwarya S Ningappanavar**
+**Aishwarya S N**
 
-B.E. Electronics and Communication Engineering
-
-Nitte Meenakshi Institute of Technology (NMIT), Bengaluru
+Electronics & Communication Engineering Student
 
 GitHub: https://github.com/aishwarya-15sn
-
-LinkedIn: https://www.linkedin.com/in/snaishwarya
->>>>>>> 00ff132cc1a49fdb4d9600920c9425428a7757c7
