@@ -10,10 +10,10 @@ DocuMind combines semantic search with Google Gemini to retrieve relevant inform
 
 - 📄 Upload one or multiple PDF documents
 - 📝 Generate AI-powered document summaries
-- 🔍 Semantic search using FAISS vector embeddings
+- 🔍 Semantic search using FAISS and HuggingFace embeddings
 - 💬 Ask questions in natural language
 - 🎯 Context-aware responses based only on uploaded documents
-- 🚫 Detects when information is unavailable in the uploaded documents
+- 🚫 Answers only from the uploaded document context and indicates when information is unavailable
 - 📊 Document analytics (Documents, Pages, Chunks)
 - 📥 Download chat history as CSV
 - 🗑️ Clear Chat and Reset functionality
@@ -29,7 +29,7 @@ DocuMind combines semantic search with Google Gemini to retrieve relevant inform
 | LangChain | RAG Pipeline |
 | FAISS | Vector Database |
 | HuggingFace Embeddings | Semantic Search |
-| Google Gemini 2.0 Flash | Large Language Model |
+| Google Gemini Flash | Large Language Model |
 | PyPDF2 | PDF Text Extraction |
 | Pandas | Chat History Export |
 
