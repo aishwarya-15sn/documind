@@ -6,6 +6,12 @@ DocuMind combines semantic search with Google Gemini to retrieve relevant inform
 
 ---
 
+## 🌐 Live Demo
+
+**Streamlit App:** https://aishwarya-15sn-documind-app-ttxhcd.streamlit.app/
+
+---
+
 ## 🚀 Features
 
 - 📄 Upload one or multiple PDF documents
