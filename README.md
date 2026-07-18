@@ -1,3 +1,24 @@
+<<<<<<< HEAD
+# DocuMind
+
+## Overview
+
+## Features
+
+## Tech Stack
+
+## Project Architecture
+
+## Installation
+
+## Usage
+
+## Screenshots
+
+## Future Improvements
+
+## Author
+=======
 # DocuMind – Enterprise AI Document Copilot
 
 DocuMind is an AI-powered document intelligence platform that enables semantic search, question answering, and knowledge retrieval from PDF documents using Retrieval-Augmented Generation (RAG), FAISS vector search, LangChain orchestration, and Google's Gemini models.
@@ -93,3 +114,4 @@ Nitte Meenakshi Institute of Technology (NMIT), Bengaluru
 GitHub: https://github.com/aishwarya-15sn
 
 LinkedIn: https://www.linkedin.com/in/snaishwarya
+>>>>>>> 00ff132cc1a49fdb4d9600920c9425428a7757c7
