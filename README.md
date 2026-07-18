@@ -41,6 +41,48 @@ DocuMind combines semantic search with Google Gemini to retrieve relevant inform
 
 ---
 
+## 🏗️ Project Architecture
+
+```text
+PDF Upload
+     │
+     ▼
+Text Extraction (PyPDF2)
+     │
+     ▼
+Text Chunking
+     │
+     ▼
+HuggingFace Embeddings
+(all-MiniLM-L6-v2)
+     │
+     ▼
+FAISS Vector Store
+     │
+     ▼
+Similarity Search
+     │
+     ▼
+Google Gemini Flash
+     │
+     ▼
+Context-Aware Answer
+
+---
+
+## 🔑 Key Technologies
+
+- Retrieval-Augmented Generation (RAG)
+- Semantic Search
+- Vector Database (FAISS)
+- LangChain
+- Google Gemini Flash
+- HuggingFace Embeddings
+- Streamlit
+- Natural Language Processing (NLP)
+
+---
+
 ## ⚙️ How It Works
 
 1. Upload one or more PDF documents.
