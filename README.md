@@ -51,7 +51,7 @@ DocuMind combines semantic search with Google Gemini to retrieve relevant inform
 ## 📸 Screenshots
 
 ### 🏠 Home
-![](assets/01_home.png)
+![](assets/01_home_page.png)
 
 ---
 
@@ -66,12 +66,12 @@ DocuMind combines semantic search with Google Gemini to retrieve relevant inform
 ---
 
 ### 📚 Knowledge Base Ready
-![](assets/05_knowledge_base_ready.png)
+![](assets/05_document_analytics.png)
 
 ---
 
 ### 💬 Question Answering
-![](assets/06_question_answer.png)
+![](assets/06_question_answering.png)
 
 ---
 
@@ -81,7 +81,7 @@ DocuMind combines semantic search with Google Gemini to retrieve relevant inform
 ---
 
 ### 🚫 Out-of-Context Question
-![](assets/08_out_of_context_question.png)
+![](assets/08_hallucination_prevention.png)
 
 ---
 
@@ -91,12 +91,12 @@ DocuMind combines semantic search with Google Gemini to retrieve relevant inform
 ---
 
 ### 📥 Download Chat History
-![](assets/10_chat_history_download.png)
+![](assets/10_download_chat.png)
 
 ---
 
 ### 📊 Exported CSV
-![](assets/11_downloaded_csv.png)
+![](assets/11_chat_history_csv.png)
 
 ---
 
