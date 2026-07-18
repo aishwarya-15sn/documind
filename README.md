@@ -45,28 +45,29 @@ DocuMind combines semantic search with Google Gemini to retrieve relevant inform
 
 ```text
 PDF Upload
-     │
-     ▼
+    │
+    ▼
 Text Extraction (PyPDF2)
-     │
-     ▼
+    │
+    ▼
 Text Chunking
-     │
-     ▼
+    │
+    ▼
 HuggingFace Embeddings
 (all-MiniLM-L6-v2)
-     │
-     ▼
+    │
+    ▼
 FAISS Vector Store
-     │
-     ▼
+    │
+    ▼
 Similarity Search
-     │
-     ▼
+    │
+    ▼
 Google Gemini Flash
-     │
-     ▼
+    │
+    ▼
 Context-Aware Answer
+```
 
 ---
 
