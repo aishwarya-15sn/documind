@@ -8,11 +8,8 @@ from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_community.embeddings import HuggingFaceEmbeddings
 from langchain_community.vectorstores import FAISS
 from langchain_google_genai import ChatGoogleGenerativeAI
-from langchain.chains.question_answering import load_qa_chain
-from langchain.prompts import PromptTemplate
 
 from datetime import datetime
-import time
 
 # to get text from pdf
 def get_pdf_text(pdf_docs):
@@ -75,33 +72,29 @@ Include:
 Document:
 {text}
 """
-
+    model=ChatGoogleGenerativeAI(
+        model="gemini-flash-latest",
+        google_api_key=api_key,
+        temperature=0.3
+    )
     try:
-        model=ChatGoogleGenerativeAI(model="gemini-flash-latest", google_api_key=api_key, temperature=0.3)
-        try:
-            response=model.invoke(prompt)
-        except Exception as e:
-            if "prepayment credits are depleted" in str(e):
-                st.error("🚫 Your Gemini API project has no remaining credits. Please recharge your AI Studio project or use another API key.")
-            elif "429" in str(e):
-                st.exception(e)
-            else:
-                st.error(f"Error: {e}")
-            return
-        
-        st.subheader("📄 Document Summary")
+        response = model.invoke(prompt)
+        st.subheader("📄 Summary of Uploaded Documents")
         st.markdown(response.content)
 
     except Exception as e:
-        if "429" in str(e) or "ResourceExhausted" in str(e):
-            st.error("🚫 Gemini API quota exceeded. Please wait about a minute and try again, or use another API key.")
+        error_msg = str(e)
+        if "429" in error_msg or "ResourceExhausted" in error_msg:
+            st.error(
+                "🚫 Gemini API daily quota exceeded.\n\n"
+                "Please wait for the quota to reset or use another API key from a different Google Cloud project."
+            )
+        elif "prepayment credits are depleted" in error_msg:
+            st.error(
+                "🚫 Your Gemini API project has no remaining credits."
+            )
         else:
-            if "prepayment credits are depleted" in str(e):
-                st.error("🚫 Your Gemini API project has no remaining credits. Please recharge your AI Studio project or use another API key.")
-            elif "429" in str(e):
-                st.exception(e)
-            else:
-                st.error(f"Error: {e}")
+            st.error(f"Error: {e}")    
 
 # to take the user input
 def user_input(user_question,model_name,api_key,pdf_docs,conversation_history):
@@ -142,18 +135,21 @@ def user_input(user_question,model_name,api_key,pdf_docs,conversation_history):
         )
 
         try:
-            response=model.invoke(prompt)
+            response = model.invoke(prompt)
         except Exception as e:
-            if "prepayment credits are depleted" in str(e):
-                st.error("🚫 Your Gemini API project has no remaining credits. Please recharge your AI Studio project or use another API key.")
-            elif "429" in str(e):
-                st.exception(e)
-            elif "ResourceExhausted" in str(e):
-                st.exception(e)
+            error_msg = str(e)
+            if "429" in error_msg or "ResourceExhausted" in error_msg:
+                st.error(
+                    "🚫 Gemini API daily quota exceeded.\n\n"
+                    "Please wait for the quota to reset or use another API key from a different Google Cloud project."
+                )
+            elif "prepayment credits are depleted" in error_msg:
+                st.error(
+                    "🚫 Your Gemini API project has no remaining credits."
+                )
             else:
                 st.error(f"Error: {e}")
             return
-
 
         user_question_output=user_question
         response_output=response.content
@@ -190,7 +186,7 @@ def main():
     with st.sidebar:
         st.title("Menu:")
         col1,col2=st.columns(2)
-        reset_button=col2.button("Reset")
+        reset_button=col2.button("🔄 Reset Application")
         clear_button=col1.button("Clear Chat")
         if reset_button:
             import os
