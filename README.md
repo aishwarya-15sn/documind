@@ -189,7 +189,7 @@ streamlit run app.py
 
 ## 👩‍💻 Author
 
-**Aishwarya S N**
+**Aishwarya S Ningappanavar**
 
 Electronics & Communication Engineering Student
 
