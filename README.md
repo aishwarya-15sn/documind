@@ -193,9 +193,8 @@ streamlit run app.py
 
 Electronics & Communication Engineering Student
 
-GitHub: <https://github.com/aishwarya-15sn>
-
-LinkedIn: <https://www.linkedin.com/in/snaishwarya/>
+- GitHub: <https://github.com/aishwarya-15sn>
+- LinkedIn: <https://www.linkedin.com/in/snaishwarya/>
 
 ---
 
