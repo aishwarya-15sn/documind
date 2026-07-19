@@ -1,14 +1,14 @@
-# 📄 DocuMind – Enterprise AI Document Copilot
+# 📄 DocuMind – Enterprise AI Document Intelligence Platform
 
 An AI-powered document intelligence application that enables users to upload one or more PDF documents, generate concise summaries, and ask questions using Retrieval-Augmented Generation (RAG).
 
-DocuMind combines semantic search with Google Gemini to retrieve relevant information only from the uploaded documents, helping reduce hallucinations and provide context-aware responses.
+DocuMind combines semantic search with Google Gemini to retrieve relevant context from uploaded documents before generating responses, enabling context-aware question answering over PDF documents.
 
 ---
 
 ## 🌐 Live Demo
 
-**Streamlit App:** https://aishwarya-15sn-documind-app-ttxhcd.streamlit.app/
+**Streamlit App:** <https://aishwarya-15sn-documind-app-ttxhcd.streamlit.app/>
 
 ---
 
@@ -18,11 +18,12 @@ DocuMind combines semantic search with Google Gemini to retrieve relevant inform
 - 📝 Generate AI-powered document summaries
 - 🔍 Semantic search using FAISS and HuggingFace embeddings
 - 💬 Ask questions in natural language
-- 🎯 Context-aware responses based only on uploaded documents
-- 🚫 Answers only from the uploaded document context and indicates when information is unavailable
+- 🎯 Context-aware question answering using Retrieval-Augmented Generation (RAG)
+- 🚫 Reduces out-of-context responses using retrieved document context
 - 📊 Document analytics (Documents, Pages, Chunks)
 - 📥 Download chat history as CSV
-- 🗑️ Clear Chat and Reset functionality
+- 🗑️ Clear Chat
+- 🔄 Reset Application (clears processed knowledge base, session state and cached resources)
 
 ---
 
@@ -35,7 +36,7 @@ DocuMind combines semantic search with Google Gemini to retrieve relevant inform
 | LangChain | RAG Pipeline |
 | FAISS | Vector Database |
 | HuggingFace Embeddings | Semantic Search |
-| Google Gemini Flash | Large Language Model |
+| Google Gemini Flash (gemini-flash-latest) | Large Language Model |
 | PyPDF2 | PDF Text Extraction |
 | Pandas | Chat History Export |
 
@@ -54,18 +55,7 @@ flowchart TD
     G --> H[Context-Aware Response]
 ```
 
----
-
-## 🔑 Key Technologies
-
-- Retrieval-Augmented Generation (RAG)
-- Semantic Search
-- Vector Database (FAISS)
-- LangChain
-- Google Gemini Flash
-- HuggingFace Embeddings
-- Streamlit
-- Natural Language Processing (NLP)
+The application extracts text from uploaded PDFs, creates embeddings, stores them in a FAISS vector database, retrieves relevant document chunks, and uses Google Gemini Flash to generate context-aware responses.
 
 ---
 
@@ -176,6 +166,8 @@ Add your Gemini API key
 GOOGLE_API_KEY="YOUR_API_KEY"
 ```
 
+Get a free Gemini API key from **Google AI Studio**.
+
 Run the application
 
 ```bash
@@ -191,7 +183,7 @@ streamlit run app.py
 - Page-wise source citations
 - Persistent conversation memory
 - Multiple embedding model options
-- Cloud deployment
+- Hybrid Search (Keyword + Vector Search)
 
 ---
 
@@ -201,4 +193,12 @@ streamlit run app.py
 
 Electronics & Communication Engineering Student
 
-GitHub: https://github.com/aishwarya-15sn
+GitHub: <https://github.com/aishwarya-15sn>
+
+LinkedIn: <https://www.linkedin.com/in/snaishwarya/>
+
+---
+
+## Acknowledgements
+
+This project was inspired by the YouTube tutorial **"Build a RAG-Based PDF Chatbot with Streamlit, FAISS, LangChain & Gemini API (Free)"**. The original implementation served as a starting point, and this version extends it with additional features, improved UI, and enhanced functionality.
