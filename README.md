@@ -42,7 +42,7 @@ DocuMind combines semantic search with Google Gemini to retrieve relevant contex
 
 ---
 
-## 🏗️ Project Architecture
+## 🏗️ System Architecture
 
 ```mermaid
 flowchart TD
