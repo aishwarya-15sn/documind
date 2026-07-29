@@ -27,6 +27,14 @@ DocuMind combines semantic search with Google Gemini to retrieve relevant contex
 
 ---
 
+## 📈 Performance
+
+- ✅ Successfully tested with **100+ PDF documents** in a single knowledge base.
+- ✅ Supports semantic search across multiple uploaded documents.
+- ✅ Efficient context retrieval using **FAISS** and **Google Gemini Flash**.
+
+---
+
 ## 🛠 Tech Stack
 
 | Technology | Purpose |
@@ -154,9 +162,9 @@ Install the required packages
 pip install -r requirements.txt
 ```
 
-Create a Streamlit secrets file
+Create a Streamlit secrets file named:
 
-```
+```text
 .streamlit/secrets.toml
 ```
 
@@ -166,12 +174,36 @@ Add your Gemini API key
 GOOGLE_API_KEY="YOUR_API_KEY"
 ```
 
-Get a free Gemini API key from **Google AI Studio**.
+Get a free Gemini API key from **Google AI Studio**:
+
+<https://aistudio.google.com/app/apikey>
 
 Run the application
 
 ```bash
 streamlit run app.py
+```
+
+---
+
+## 📁 Project Structure
+
+```text
+documind/
+│
+├── .streamlit/
+│   ├── config.toml
+│   └── secrets.toml.example
+│
+├── assets/
+│   ├── 01_home_page.png
+│   ├── ...
+│   └── 13_Reset.png
+│
+├── app.py
+├── README.md
+├── requirements.txt
+└── .gitignore
 ```
 
 ---
