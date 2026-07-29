@@ -1,6 +1,7 @@
 # import packages:
 import streamlit as st
 from PyPDF2 import PdfReader
+from PyPDF2.errors import PdfReadError
 import pandas as pd
 
 # imports for langchain
@@ -15,11 +16,40 @@ from datetime import datetime
 def get_pdf_text(pdf_docs):
     text=""
     for pdf in pdf_docs:
-        pdf_reader=PdfReader(pdf)
-        for page in pdf_reader.pages:
-            extracted=page.extract_text()
-            if extracted:  
-                text += extracted
+
+        try:
+            pdf_reader=PdfReader(pdf)
+            for page in pdf_reader.pages:
+                extracted=page.extract_text()
+
+                if extracted:
+                    text+=extracted
+        except PdfReadError:
+            st.error(
+                f"""
+❌ Unable to read **{pdf.name}**
+
+Possible reasons:
+
+• The PDF is corrupted.\n
+• The PDF is password protected.\n
+• The PDF download is incomplete.\n
+• The file is not a valid PDF.
+
+Please remove this file and upload a valid PDF.
+"""
+            )
+            continue
+        except Exception:
+
+            st.error(
+                f"""
+❌ Unable to process **{pdf.name}**
+
+Please upload a valid PDF document.
+"""
+            )
+            continue
     return text
 
 # to get chunks from text
@@ -37,22 +67,51 @@ def load_embeddings():
 
 # embedding the chunks and storing them in a vector store
 def get_vector_store(text_chunks, model_name, api_key=None):
-    if model_name == "Google AI":
+    if model_name=="Google AI":
         embeddings=load_embeddings()
         try:
             vector_store=FAISS.from_texts(text_chunks, embedding=embeddings)
             vector_store.save_local("./faiss_index")
             return vector_store
-        except Exception as e:
-            st.write(e)
-            raise
+        except Exception:
+
+            st.error(
+                """
+❌ Failed to create the knowledge base.
+
+Possible reasons:
+
+• One or more uploaded PDFs could not be processed.\n
+• The embedding model could not be loaded.\n
+• An unexpected error occurred.
+
+Please try again.
+"""
+            )
+            return
 
 def generate_summary(pdf_docs, api_key):
+
     if not pdf_docs:
         st.warning("Please upload PDF documents first.")
         return
-
     text=get_pdf_text(pdf_docs)
+    if not text.strip():
+
+        st.error(
+            """
+❌ No readable text was found.
+
+Possible reasons:
+
+• Uploaded PDFs contain only scanned images.\n
+• Uploaded PDFs are empty.\n
+• Uploaded PDFs are corrupted.
+
+Please upload text-based PDF documents.
+"""
+        )
+        return
 
     # Reduce input size to avoid quota exhaustion
     MAX_CHARS=6000
@@ -64,9 +123,9 @@ You are an intelligent document analyst.
 Generate a concise but informative summary.
 
 Include:
-• Main Topics
-• Key Findings
-• Important People / Organizations
+• Main Topics\n
+• Key Findings\n
+• Important People / Organizations\n
 • Final Conclusion
 
 Document:
@@ -78,12 +137,12 @@ Document:
         temperature=0.3
     )
     try:
-        response = model.invoke(prompt)
+        response=model.invoke(prompt)
         st.subheader("📄 Summary of Uploaded Documents")
         st.markdown(response.content)
 
     except Exception as e:
-        error_msg = str(e)
+        error_msg=str(e)
         if "429" in error_msg or "ResourceExhausted" in error_msg:
             st.error(
                 "🚫 Gemini API daily quota exceeded.\n\n"
@@ -94,7 +153,15 @@ Document:
                 "🚫 Your Gemini API project has no remaining credits."
             )
         else:
-            st.error(f"Error: {e}")    
+            st.error(
+                """
+❌ Something went wrong while generating the summary.
+
+Please try again.
+
+If the issue persists, verify your Gemini API configuration or try again later.
+"""
+            )    
 
 # to take the user input
 def user_input(user_question,model_name,api_key,pdf_docs,conversation_history):
@@ -114,7 +181,6 @@ def user_input(user_question,model_name,api_key,pdf_docs,conversation_history):
         
         # search for similar chunks
         docs=faiss_db.similarity_search(user_question)
-
         context="\n\n".join([doc.page_content for doc in docs])
 
         prompt=f"""
@@ -133,11 +199,10 @@ def user_input(user_question,model_name,api_key,pdf_docs,conversation_history):
             google_api_key=api_key,
             temperature=0.3
         )
-
         try:
-            response = model.invoke(prompt)
+            response=model.invoke(prompt)
         except Exception as e:
-            error_msg = str(e)
+            error_msg=str(e)
             if "429" in error_msg or "ResourceExhausted" in error_msg:
                 st.error(
                     "🚫 Gemini API daily quota exceeded.\n\n"
@@ -148,7 +213,15 @@ def user_input(user_question,model_name,api_key,pdf_docs,conversation_history):
                     "🚫 Your Gemini API project has no remaining credits."
                 )
             else:
-                st.error(f"Error: {e}")
+                st.error(
+                    """
+❌ Something went wrong while generating the answer.
+
+Please try asking your question again.
+
+If the problem persists, verify your Gemini API configuration or try again later.
+"""
+                )
             return
 
         user_question_output=user_question
@@ -180,7 +253,7 @@ def main():
         st.session_state.conversation_history=[]
     model_name=st.sidebar.radio("Select the Model:", ["Google AI"])
 
-    if model_name == "Google AI":
+    if model_name=="Google AI":
         api_key=st.secrets["GOOGLE_API_KEY"]
 
     with st.sidebar:
@@ -201,15 +274,32 @@ def main():
             st.cache_data.clear()
             st.cache_resource.clear()
             st.rerun()
-
         else:
             if clear_button:
                 st.session_state.conversation_history=[]
                 if "user_question" in st.session_state:
                     del st.session_state["user_question"]
                 st.rerun()
+        pdf_docs=st.file_uploader(
+            "Upload one or more PDF documents",
+            type=["pdf"],
+            accept_multiple_files=True,
+            key="pdf_uploader",
+            help="Maximum file size: 10 MB per PDF"
+        )
 
-        pdf_docs=st.file_uploader("Upload one or more PDF documents", accept_multiple_files=True, key="pdf_uploader")
+        MAX_FILE_SIZE=10*1024*1024
+        valid_pdfs=[]
+        if pdf_docs:
+            for pdf in pdf_docs:
+                if pdf.size > MAX_FILE_SIZE:
+                    st.error(
+                        f"❌ '{pdf.name}' exceeds the maximum allowed file size of 10 MB."
+                    )
+                else:
+                    valid_pdfs.append(pdf)
+        pdf_docs=valid_pdfs
+
         if pdf_docs:
             if st.button("📄 Generate Summary"):
                 with st.spinner("Generating Summary..."):
@@ -221,19 +311,58 @@ def main():
         st.divider()
         st.subheader("About")
         st.info("""
-                📄 Upload one or more PDF documents
-                🔍 Ask questions in natural language
-                🧠 Semantic search using FAISS
+                📄 Upload one or more PDF documents\n
+                🔍 Ask questions in natural language\n
+                🧠 Semantic search using FAISS\n
                 🤖 AI-generated answers using Gemini""")
         if st.button("Submit & Process"):
             if pdf_docs:
                 total_pages=0
                 for pdf in pdf_docs:
-                    reader=PdfReader(pdf)
-                    total_pages += len(reader.pages)
+                    try:
+                        reader=PdfReader(pdf)
+                        total_pages+=len(reader.pages)
+                    except PdfReadError:
 
-                with st.spinner("Reading PDFs • Creating Embeddings • Building Knowledge Base..."):
+                        st.error(
+                            f"""
+❌ Unable to read **{pdf.name}**
+
+Possible reasons:
+
+• Corrupted PDF\n
+• Password protected PDF\n
+• Incomplete PDF\n
+• Invalid PDF format
+
+Please remove this document and upload a valid PDF.
+"""
+                        )
+                        continue
+                    except Exception:
+                        st.error(
+                            f"❌ Failed to read '{pdf.name}'. Please upload a valid PDF."
+                        )
+                        continue
+
+                with st.spinner("Reading PDFs \n• Creating Embeddings \n• Building Knowledge Base..."):
                     text=get_pdf_text(pdf_docs)
+                    if not text.strip():
+
+                        st.error(
+                            """
+❌ No readable text was found.
+
+Possible reasons:
+
+• Uploaded PDFs contain only scanned images.\n
+• Uploaded PDFs are empty.\n
+• Uploaded PDFs are corrupted.
+
+Please upload text-based PDF documents.
+"""
+                        )
+                        st.stop()
                     chunks=get_text_chunks(text, model_name)
                     get_vector_store(chunks, model_name, api_key)
 
@@ -244,7 +373,6 @@ def main():
                 st.sidebar.write("Embedding: all-MiniLM-L6-v2")
                 st.sidebar.write("LLM: Gemini Flash Latest")
                 st.success("Knowledge Base Ready. You can now ask questions.")
-
             else:
                 st.warning("Please upload PDF files before processing.")
     
