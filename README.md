@@ -1,4 +1,4 @@
-# 📄 DocuMind – Enterprise AI Document Intelligence Platform
+# 📄 DocuMind – AI Document Intelligence Platform
 
 An AI-powered document intelligence application that enables users to upload one or more PDF documents, generate concise summaries, and ask questions using Retrieval-Augmented Generation (RAG).
 
