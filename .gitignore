@@ -1,7 +1,16 @@
-myenv/
+# Virtual Environments
 venv/
+myenv/
+
+# Python
 __pycache__/
 *.pyc
-faiss_index/
+
+# Streamlit Secrets
 .streamlit/secrets.toml
+
+# FAISS Index
+faiss_index/
+
+# Environment Variables
 .env
